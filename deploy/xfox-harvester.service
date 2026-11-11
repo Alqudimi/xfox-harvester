@@ -1,0 +1,29 @@
+# XFox Harvester — systemd unit template
+# Install:
+#   sudo cp deploy/xfox-harvester.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now xfox-harvester
+
+[Unit]
+Description=XFox Harvester — safe X post harvesting around X-CrawlFox
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Adjust to your deployment user and project path:
+User=xfox
+WorkingDirectory=/opt/xfox-harvester
+EnvironmentFile=/opt/xfox-harvester/.env
+ExecStart=/opt/xfox-harvester/.venv/bin/uvicorn xfox.main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=5
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

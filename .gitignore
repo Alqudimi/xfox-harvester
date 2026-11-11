@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# Environment & secrets
+.env
+data/
+!data/.gitkeep
+
+# Node / frontend
+web/node_modules/
+web/dist/
+node_modules/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editors & OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs & runtime artifacts
+*.log
+*.jsonl

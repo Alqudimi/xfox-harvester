@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Cairo — self-hosted variable font (Arabic + Latin)                  */
+/* ------------------------------------------------------------------ */
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("./assets/fonts/cairo-arabic.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+@font-face {
+  font-family: "Cairo";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("./assets/fonts/cairo-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-sans: "Cairo", "Segoe UI", Tahoma, sans-serif;
+
+  --color-fox-50: #fff7ed;
+  --color-fox-100: #ffedd5;
+  --color-fox-200: #fed7aa;
+  --color-fox-300: #fdba74;
+  --color-fox-400: #fb923c;
+  --color-fox-500: #f97316;
+  --color-fox-600: #ea580c;
+  --color-fox-700: #c2410c;
+  --color-fox-800: #9a3412;
+  --color-fox-900: #7c2d12;
+
+  --color-ink-950: #0c0d10;
+  --color-ink-900: #121317;
+  --color-ink-850: #17181d;
+  --color-ink-800: #1d1e24;
+  --color-ink-700: #26272f;
+  --color-ink-600: #34353f;
+  --color-ink-500: #4a4b57;
+  --color-ink-400: #6b6c7a;
+  --color-ink-300: #93949f;
+  --color-ink-200: #b9bac3;
+  --color-ink-100: #d8d9df;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-ink-950 text-ink-100 antialiased;
+  font-family: var(--font-sans);
+}
+
+/* Scrollbars — slim and theme-aware */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-500);
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--color-fox-500);
+  outline-offset: 2px;
+}
+
+/* Recharts tooltips inherit the theme */
+.recharts-default-tooltip {
+  background-color: var(--color-ink-800) !important;
+  border: 1px solid var(--color-ink-600) !important;
+  border-radius: 10px !important;
+  color: var(--color-ink-100) !important;
+}
+.recharts-cartesian-axis-tick text {
+  fill: var(--color-ink-300);
+  font-size: 11px;
+}
+
+/* Subtle entry animation for page content */
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-enter {
+  animation: fade-slide-in 0.25s ease-out both;
+}
+
+/* Pulsing live indicator */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}

@@ -1,0 +1,15 @@
+# Keep images lean — everything here is rebuilt inside the container.
+.git
+.gitignore
+.env
+data
+**/__pycache__
+**/*.pyc
+web/node_modules
+web/dist
+docs
+tests
+scripts
+deploy
+*.md
+!README.md

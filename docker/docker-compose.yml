@@ -1,0 +1,41 @@
+name: xfox-harvester
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: xfox
+      POSTGRES_PASSWORD: ${XFOX_DB_PASSWORD:-xfox_change_me}
+      POSTGRES_DB: xfox
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xfox -d xfox"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  xfox:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      XFOX_DATABASE_URL: postgresql+asyncpg://xfox:${XFOX_DB_PASSWORD:-xfox_change_me}@postgres:5432/xfox
+      XFOX_SECRET_KEY: ${XFOX_SECRET_KEY:?set XFOX_SECRET_KEY in .env (see .env.example)}
+      XFOX_DATA_DIR: /app/data
+      XFOX_HOST: 0.0.0.0
+      XFOX_PORT: "8000"
+      XFOX_ENVIRONMENT: production
+    ports:
+      - "${XFOX_PORT:-8000}:8000"
+    volumes:
+      - app-data:/app/data
+
+volumes:
+  postgres-data:
+  app-data:
